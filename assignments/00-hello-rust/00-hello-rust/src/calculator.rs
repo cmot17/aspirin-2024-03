@@ -17,7 +17,9 @@ enum Operation {
 fn get_number() -> i64 {
     loop {
         let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
         let input = input.trim();
 
         let (base, number_str) = match input.get(..2) {
@@ -42,7 +44,9 @@ fn get_number() -> i64 {
 fn get_operation() -> Operation {
     loop {
         let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
         let input = input.trim().to_lowercase();
 
         match input.as_str() {
@@ -82,7 +86,9 @@ pub fn main() {
         print!("Do you want to perform another calculation? (y/n): ");
         io::stdout().flush().unwrap();
         let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
         if input.trim().to_lowercase() != "y" {
             break;
         }

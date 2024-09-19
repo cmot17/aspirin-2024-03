@@ -58,12 +58,12 @@ const OLIN_STUDENTS: [Student; 8] = [
         name: "Lorin",
         class_year: ClassYear::Junior,
         gpa: 3.6,
-    }
+    },
 ];
 
 fn get_average_gpa() -> f32 {
     let mut num = 0;
-    let mut sum: f32  = 0.0;
+    let mut sum: f32 = 0.0;
     for student in OLIN_STUDENTS {
         if student.class_year != ClassYear::FirstYear {
             sum += student.gpa;

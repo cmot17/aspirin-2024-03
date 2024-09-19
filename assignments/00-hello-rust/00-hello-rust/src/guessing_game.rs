@@ -5,7 +5,6 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 
-
 /// Asks the user for a guess, reads an i32 from stdin or panic if the user's input is not a valid i32.
 fn get_input() -> i32 {
     println!("Please input your guess");
