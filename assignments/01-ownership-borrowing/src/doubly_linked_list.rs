@@ -16,7 +16,10 @@ pub struct LinkedStack {
 
 impl LinkedStack {
     fn new() -> Self {
-        todo!();
+        LinkedStack {
+            head: None,
+            tail: None,
+        }
     }
 
     fn push(&mut self, val: i32) {

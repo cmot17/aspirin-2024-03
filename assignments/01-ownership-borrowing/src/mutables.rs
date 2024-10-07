@@ -1,16 +1,21 @@
 /// Increments a mutable i32 reference by 1. On overflow, wraps around.
-fn increments() {
-    todo!();
+fn increments(int: &mut i32) {
+    *int = int.wrapping_add(1);
 }
 
 /// Given two mutable i32 references, swap their values
-fn swap() {
-    todo!();
+#[allow(clippy::manual_swap)]
+fn swap(a: &mut i32, b: &mut i32) {
+    let c = *b;
+    *b = *a;
+    *a = c;
 }
 
 /// Given a mutable string slice, strip all vowels and digits
-fn strip_vowels_and_digits() {
-    todo!();
+fn strip_vowels_and_digits(str: &mut str) -> String {
+    let mut stripped = strip_digits(String::from(str));
+    strip_vowels(&mut stripped);
+    stripped
 }
 
 // DO NOT MODIFY BELOW THIS LINE

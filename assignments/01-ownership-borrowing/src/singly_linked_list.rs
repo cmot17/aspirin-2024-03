@@ -11,23 +11,30 @@ pub struct LinkedStack {
 
 impl LinkedStack {
     fn new() -> Self {
-        todo!()
+        LinkedStack { head: None }
     }
 
     fn push(&mut self, val: i32) {
-        todo!();
+        self.head = Some(Box::new(Node {
+            val,
+            next: self.head.take(),
+        }))
     }
 
     fn pop(&mut self) -> Option<i32> {
-        todo!();
+        self.head.take().map(|s| {
+            self.head = s.next;
+            s.val
+        })
     }
 }
 
-impl Drop for LinkedStack {
-    fn drop(&mut self) {
-        todo!();
-    }
-}
+
+// impl Drop for LinkedStack {
+//     fn drop(&mut self) {
+//         todo!();
+//     }
+// }
 
 // DO NOT MODIFY BELOW THIS LINE
 
