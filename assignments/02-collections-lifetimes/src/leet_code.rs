@@ -1,23 +1,107 @@
-use std::collections::HashMap;
+use std::{vec};
 
-fn longest_equal_sequence_prescriptive(sequence) -> i32 {
-    todo!()
+fn longest_equal_sequence_prescriptive<T: std::cmp::PartialEq>(sequence: &[T]) -> i32 {
+    let mut max_length = 0;
+    let mut current_length = 1;
+    if sequence.is_empty() {
+        return 0;
+    }
+    for i in 1..sequence.len() {
+        if sequence[i] == sequence[i - 1] {
+            current_length += 1;
+            if current_length > max_length {
+                max_length = current_length;
+            }
+        } else {
+            current_length = 1;
+        }
+    }
+    if current_length > max_length {
+        max_length = current_length;
+    }
+    max_length
 }
 
-fn longest_equal_sequence_functional(sequence) -> i32 {
-    todo!()
+fn longest_equal_sequence_functional<T: std::cmp::PartialEq>(sequence: &[T]) -> i32 {
+    sequence
+        .iter()
+        .fold(
+            (0, 1, None),
+            |(max_length, current_length, previous_element): (i32, i32, Option<&T>), element| {
+                match previous_element {
+                    Some(prev) if prev == element => {
+                        let new_length = current_length + 1;
+                        (max_length.max(new_length), new_length, Some(element))
+                    }
+                    _ => (max_length.max(current_length), 1, Some(element)),
+                }
+            },
+        )
+        .0
 }
 
 fn is_valid_paranthesis(paranthesis: &str) -> bool {
-    todo!()
+    let mut stack: Vec<char> = Vec::new();
+    for c in paranthesis.chars() {
+        match c {
+            '(' | '[' | '{' => stack.push(c),
+            ')' | ']' | '}' => {
+                if stack.pop().unwrap_or_default()
+                    != match c {
+                        ')' => '(',
+                        ']' => '[',
+                        '}' => '{',
+                        _ => return false,
+                    }
+                {
+                    return false;
+                }
+            }
+            _ => return false,
+        }
+    }
+    stack.is_empty()
 }
 
-fn longest_common_substring<(first_str: &str, second_str: &str) -> &str {
-    todo!()
+
+fn longest_common_substring(first_str: &str, second_str: &str) -> String {
+    let first_chars: Vec<char> = first_str.chars().collect();
+    let second_chars: Vec<char> = second_str.chars().collect();
+    let mut max_length = 0;
+    let mut end_index = 0;
+
+    for i in 0..first_chars.len() {
+        for j in 0..second_chars.len() {
+            let mut k = 0;
+            while i + k < first_chars.len() && j + k < second_chars.len() &&
+                  first_chars[i + k] == second_chars[j + k] {
+                k += 1;
+            }
+            if k > max_length {
+                max_length = k;
+                end_index = i + k;
+            }
+        }
+    }
+
+    first_str[end_index - max_length..end_index].to_string()
 }
 
-fn longest_common_substring_multiple(strings: &[&str]) -> &str {
-    todo!()
+fn longest_common_substring_multiple(strings: &[&str]) -> String {
+    if strings.is_empty() {
+        return String::new();
+    }
+
+    let mut result = strings[0].to_string();
+
+    for i in 1..strings.len() {
+        result = longest_common_substring(&result, strings[i]);
+        if result.is_empty() {
+            break;
+        }
+    }
+
+    result
 }
 
 #[cfg(test)]

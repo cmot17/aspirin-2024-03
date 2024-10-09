@@ -1,3 +1,5 @@
+use std::iter::zip;
+
 #[derive(Debug, PartialEq)]
 pub enum MatrixError {
     EmptyVector,
@@ -6,18 +8,64 @@ pub enum MatrixError {
 }
 
 fn dot_product_prescriptive(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, MatrixError> {
-    todo!()
+    if vec1.is_empty() || vec2.is_empty() {
+        return Err(MatrixError::EmptyVector);
+    }
+    if vec1.len() != vec2.len() {
+        return Err(MatrixError::DimensionMismatch);
+    }
+    let mut result = 0.0;
+    for i in 0..vec1.len() {
+        result += vec1[i] * vec2[i];
+    }
+    Ok(result)
 }
 
 fn dot_product_functional(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, MatrixError> {
-    todo!()
+    if vec1.is_empty() || vec2.is_empty() {
+        return Err(MatrixError::EmptyVector);
+    }
+    if vec1.len() != vec2.len() {
+        return Err(MatrixError::DimensionMismatch);
+    }
+
+    Ok(zip(vec1.iter(), vec2.iter()).fold(0.0, |acc, (a, b)| acc + a * b))
 }
 
 fn multiply_matrices(
     vec1: &Vec<Vec<f64>>,
     vec2: &Vec<Vec<f64>>,
 ) -> Result<Vec<Vec<f64>>, MatrixError> {
-    todo!()
+    if vec1.is_empty() || vec2.is_empty() {
+        return Err(MatrixError::EmptyVector);
+    }
+
+    let vec1_dims = (vec1.len(), vec1[0].len());
+    let vec2_dims = (vec2.len(), vec2[0].len());
+
+    if vec1.iter().any(|row| row.len() != vec1_dims.1) {
+        return Err(MatrixError::InvalidShape);
+    }
+    if vec2.iter().any(|row| row.len() != vec2_dims.1) {
+        return Err(MatrixError::InvalidShape);
+    }
+
+    if vec1_dims.1 != vec2_dims.0 {
+        return Err(MatrixError::DimensionMismatch)
+    }
+
+    let mut result: Vec<Vec<f64>> = Vec::new();
+
+    for row in 0..vec1_dims.0 {
+        result.push(Vec::new());
+        for column in 0..vec2_dims.1 {
+            let column_data: Vec<f64> = vec2.iter().map(|row| row[column]).collect();
+            let row_data: &Vec<f64> = &vec1[row];
+
+            result[row].push(dot_product_functional(&column_data, row_data).unwrap())
+        }
+    }
+    Ok(result)
 }
 
 #[cfg(test)]
