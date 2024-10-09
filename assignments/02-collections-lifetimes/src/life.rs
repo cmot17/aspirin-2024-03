@@ -62,12 +62,12 @@ fn merge_names(first_name: &str, second_name: &str) -> String {
                 Some(&c) if first_char || !"AEIOUaeiou".contains(c) => {
                     println!("Adding character '{}' from first name", c);
                     merged_name.push(c);
-                    first_name_chars.next();  // Advance iterator only when character is used
+                    first_name_chars.next(); // Advance iterator only when character is used
                     first_char = false;
                 }
                 Some(&c) => {
                     println!("Skipping vowel '{}' from first name", c);
-                    current_name = 1;  // Switch to second name if vowel encountered
+                    current_name = 1; // Switch to second name if vowel encountered
                     first_char = true;
                 }
                 None => {
@@ -82,12 +82,12 @@ fn merge_names(first_name: &str, second_name: &str) -> String {
                 Some(&c) if first_char || !"AEIOUaeiou".contains(c) => {
                     println!("Adding character '{}' from second name", c);
                     merged_name.push(c);
-                    second_name_chars.next();  // Advance iterator only when character is used
+                    second_name_chars.next(); // Advance iterator only when character is used
                     first_char = false;
                 }
                 Some(&c) => {
                     println!("Skipping vowel '{}' from second name", c);
-                    current_name = 0;  // Switch to first name if vowel encountered
+                    current_name = 0; // Switch to first name if vowel encountered
                     first_char = true;
                 }
                 None => {
@@ -106,7 +106,6 @@ fn merge_names(first_name: &str, second_name: &str) -> String {
     merged_name
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -124,27 +123,21 @@ mod tests {
         println!("Matches can be printed! See: {:?}", matches);
 
         // Now check the split logic
-        assert_eq!(split_string(&"", &""), Vec::<&str>::new());
-        assert_eq!(
-            split_string(&"Hello, World!", &", "),
-            vec!["Hello", "World!"]
-        );
+        assert_eq!(split_string("", ""), Vec::<&str>::new());
+        assert_eq!(split_string("Hello, World!", ", "), vec!["Hello", "World!"]);
         assert_eq!(
             split_string(
-                &"I this think this that this sentence this is this very this confusing this ",
-                &" this "
+                "I this think this that this sentence this is this very this confusing this ",
+                " this "
             ),
             vec!["I", "think", "that", "sentence", "is", "very", "confusing"]
         );
         assert_eq!(
-            split_string(&"apple🍎banana🍎orange", &"🍎"),
+            split_string("apple🍎banana🍎orange", "🍎"),
             vec!["apple", "banana", "orange"]
         );
         assert_eq!(
-            split_string(
-                &"Ayush;put|a,lot~of`random;delimeters|in|this,sentence",
-                &";"
-            ),
+            split_string("Ayush;put|a,lot~of`random;delimeters|in|this,sentence", ";"),
             vec![
                 "Ayush",
                 "put|a,lot~of`random",
@@ -156,14 +149,14 @@ mod tests {
     #[test]
     fn test_find_differences() {
         assert_eq!(
-            find_differences(&"", &""),
+            find_differences("", ""),
             Differences {
                 only_in_first: Vec::new(),
                 only_in_second: Vec::new()
             }
         );
         assert_eq!(
-            find_differences(&"pineapple pen", &"apple"),
+            find_differences("pineapple pen", "apple"),
             Differences {
                 only_in_first: vec!["pineapple", "pen"],
                 only_in_second: Vec::new()
@@ -171,8 +164,8 @@ mod tests {
         );
         assert_eq!(
             find_differences(
-                &"Sally sold seashells at the seashore",
-                &"Seashells seashells at the seashore"
+                "Sally sold seashells at the seashore",
+                "Seashells seashells at the seashore"
             ),
             Differences {
                 only_in_first: vec!["Sally", "sold"],
@@ -191,8 +184,8 @@ mod tests {
         );
         assert_eq!(
             find_differences(
-                &"How much ground would a groundhog hog",
-                &"If a groundhog could hog ground"
+                "How much ground would a groundhog hog",
+                "If a groundhog could hog ground"
             ),
             Differences {
                 only_in_first: vec!["How", "much", "would"],
@@ -203,19 +196,17 @@ mod tests {
 
     #[test]
     fn test_merge_names() {
-        assert_eq!(merge_names(&"alex", &"jake"), "aljexake");
-        assert_eq!(merge_names(&"steven", &"stephen"), "ststevephenen");
-        assert_eq!(merge_names(&"gym", &"rhythm"), "gymrhythm");
-        assert_eq!(merge_names(&"walter", &"gibraltor"), "wgaltibreraltor");
-        assert_eq!(merge_names(&"baker", &"quaker"), "bqakueraker");
-        assert_eq!(merge_names(&"", &""), "");
-        assert_eq!(merge_names(&"samesies", &"samesies"), "ssamamesesiieses");
-        assert_eq!(merge_names(&"heather", &"meagan"), "hmeeathageran");
-        assert_eq!(merge_names(&"panda", &"turtle"), "ptandurtlae");
-        assert_eq!(merge_names(&"hot", &"sauce"), "hsotauce");
-        assert_eq!(merge_names(&"", &"second"), "second");
-        assert_eq!(merge_names(&"first", &""), "first");
+        assert_eq!(merge_names("alex", "jake"), "aljexake");
+        assert_eq!(merge_names("steven", "stephen"), "ststevephenen");
+        assert_eq!(merge_names("gym", "rhythm"), "gymrhythm");
+        assert_eq!(merge_names("walter", "gibraltor"), "wgaltibreraltor");
+        assert_eq!(merge_names("baker", "quaker"), "bqakueraker");
+        assert_eq!(merge_names("", ""), "");
+        assert_eq!(merge_names("samesies", "samesies"), "ssamamesesiieses");
+        assert_eq!(merge_names("heather", "meagan"), "hmeeathageran");
+        assert_eq!(merge_names("panda", "turtle"), "ptandurtlae");
+        assert_eq!(merge_names("hot", "sauce"), "hsotauce");
+        assert_eq!(merge_names("", "second"), "second");
+        assert_eq!(merge_names("first", ""), "first");
     }
 }
-
-

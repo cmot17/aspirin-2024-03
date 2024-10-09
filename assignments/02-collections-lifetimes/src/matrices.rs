@@ -7,7 +7,7 @@ pub enum MatrixError {
     InvalidShape,
 }
 
-fn dot_product_prescriptive(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, MatrixError> {
+fn dot_product_prescriptive(vec1: &[f64], vec2: &[f64]) -> Result<f64, MatrixError> {
     if vec1.is_empty() || vec2.is_empty() {
         return Err(MatrixError::EmptyVector);
     }
@@ -21,7 +21,7 @@ fn dot_product_prescriptive(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, Mat
     Ok(result)
 }
 
-fn dot_product_functional(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, MatrixError> {
+fn dot_product_functional(vec1: &[f64], vec2: &[f64]) -> Result<f64, MatrixError> {
     if vec1.is_empty() || vec2.is_empty() {
         return Err(MatrixError::EmptyVector);
     }
@@ -32,10 +32,7 @@ fn dot_product_functional(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, Matri
     Ok(zip(vec1.iter(), vec2.iter()).fold(0.0, |acc, (a, b)| acc + a * b))
 }
 
-fn multiply_matrices(
-    vec1: &Vec<Vec<f64>>,
-    vec2: &Vec<Vec<f64>>,
-) -> Result<Vec<Vec<f64>>, MatrixError> {
+fn multiply_matrices(vec1: &[Vec<f64>], vec2: &[Vec<f64>]) -> Result<Vec<Vec<f64>>, MatrixError> {
     if vec1.is_empty() || vec2.is_empty() {
         return Err(MatrixError::EmptyVector);
     }
@@ -51,7 +48,7 @@ fn multiply_matrices(
     }
 
     if vec1_dims.1 != vec2_dims.0 {
-        return Err(MatrixError::DimensionMismatch)
+        return Err(MatrixError::DimensionMismatch);
     }
 
     let mut result: Vec<Vec<f64>> = Vec::new();
