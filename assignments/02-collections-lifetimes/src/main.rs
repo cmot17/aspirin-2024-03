@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 mod leet_code;
 mod life;
 mod matrices;
