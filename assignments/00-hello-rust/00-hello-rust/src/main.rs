@@ -7,5 +7,5 @@ mod traffic_light;
 mod university;
 
 fn main() {
-    println!("Hello world!");
+    calculator::main()
 }
